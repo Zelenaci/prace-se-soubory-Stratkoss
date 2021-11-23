@@ -1,0 +1,115 @@
+from os import close
+from random import randint, choice
+
+
+
+soubor1=("F:\\Python\\ukoly\\text_ukol_stratil.txt")
+soubor2=("F:\\Python\\ukoly\\vysledek_ukolu.txt")
+
+
+
+
+def prepsani():
+    f1 = open(soubor1, "r")
+    f2 = open(soubor2, "w")
+    urc_slovo= input("zadejte slovo/znak které ma byt nahrazeno: ")
+    urc_slovo = urc_slovo.lower()
+  
+
+    nahrazovane = input("zadejte čím ma být nahrazeno: ")
+
+    with (f1) as zadani, (f2) as vysledek:
+        
+    
+        for line in zadani:
+            
+            vysledek.write(line.replace(urc_slovo,nahrazovane).lower())
+    print("================================")
+    print()
+    print("Úspěšně nahrazeno a přepsáno.")
+    print()
+    print("================================")
+    f1=close
+    f2=close
+            
+            
+
+
+def pocet_znaku():
+    f1 = open(soubor1, "r")
+    f2 = open(soubor2, "w")
+    pismena = dict()
+
+    
+    
+
+    while True:
+        znak = f1.read(1)
+        if znak =="":
+            break
+        if znak in pismena.keys():
+            pismena[znak]+=1
+        else:
+            pismena[znak] = 1
+
+    
+
+   
+    for znak in sorted (pismena.keys()):
+        if znak.isalpha():
+            
+            f2.write("| {0} | ==> |  {1}  |\n".format(znak, pismena[znak]))
+        
+    print("================================")
+    print()
+    print("Úspěšně vypočítáno.")
+    print()
+    print("================================")
+    f2=close
+               
+
+
+
+
+
+samohlasky = ('aeiyou')
+souhlasky = 'qwrtpsdfghjklzxcvbnm'
+
+
+def slovo(maxchars=10):
+    vysledek = ""
+    for i in range(randint (1,maxchars)):
+        if i % 2 ==0 :
+            vysledek += choice (samohlasky)
+        else:
+            vysledek += choice(souhlasky)
+    return vysledek
+
+def veta():
+    maxwords = int(input("zadejte počet slov: "))
+    vysledek= ""
+    for i in range(maxwords):
+         vysledek += slovo() + " "
+    vysledek = vysledek[:-1] + "."
+    return vysledek.capitalize()
+   
+
+              
+
+def menu():
+    a   = int(input("Vyberte akci: \n generovaní vety  1 \n vypocet znaku    2 \n prepsani souboru 3 \n zadejte cislo operace:  "))
+    if (a == 1):
+       
+        
+        print(veta())
+    elif (a == 2):
+        pocet_znaku()  
+    
+    elif (a == 3):
+        prepsani() 
+
+    
+      
+    return menu()
+
+menu()
